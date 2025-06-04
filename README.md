@@ -1,8 +1,10 @@
 # Guia Completo para Implantação de Rede IoT LoRaWAN com ChirpStack
 
 Aluno: Luís Felipe Lewandoski Borsoi
+
 [Repositório](https://github.com/luisfelipe998/lorawan-guia)
-[Clique neste link]() para abrir essa documentação.
+
+[Clique neste link](https://luisfelipe998.github.io/lorawan-guia/) para abrir essa documentação.
 
 ## Introdução
 
