@@ -1,4 +1,4 @@
-# :blue_book: Guia Completo para Implantação de Rede IoT LoRaWAN com ChirpStack
+# 📘 Guia Completo para Implantação de Rede IoT LoRaWAN com ChirpStack
 
 Aluno: Luís Felipe Lewandoski Borsoi
 
@@ -6,7 +6,7 @@ Aluno: Luís Felipe Lewandoski Borsoi
 
 [Clique neste link](https://luisfelipe998.github.io/lorawan-guia/) para abrir essa documentação.
 
-## :star: Introdução
+## Introdução
 
 Esse documento apresenta um roteiro prático para a implantação de uma rede IoT utilizando o padrão LoRaWAN, com o servidor de rede ChirpStack. O cenário considerado envolve:
 
@@ -17,7 +17,7 @@ Esse documento apresenta um roteiro prático para a implantação de uma rede Io
 
 ---
 
-## :question: Por que LoRaWAN com ChirpStack?
+## Por que LoRaWAN com ChirpStack?
 
 O LoRaWAN é uma tecnologia de comunicação sem fio ideal para aplicações que exigem longo alcance e baixo consumo de energia. É amplamente usada em agricultura de precisão, cidades inteligentes e monitoramento ambiental. O ChirpStack, por sua vez, é uma solução open-source robusta e flexível para gerenciar redes LoRaWAN sem custos de licenciamento.
 
@@ -36,7 +36,7 @@ O LoRaWAN é uma tecnologia de comunicação sem fio ideal para aplicações que
 
 ---
 
-## :satellite: Etapa 1 – Configuração do Gateway LoRa (Canais 0–7)
+## Etapa 1 – Configuração do Gateway LoRa (Canais 0–7)
 
 O gateway é o elo entre os dispositivos IoT e o backend da rede. Ele escuta os pacotes LoRa enviados pelos sensores e os retransmite para o servidor ChirpStack via UDP. O uso de canais LoRa configurados corretamente e de um concentrador compatível é essencial para garantir que os dados transmitidos pelos dispositivos cheguem com confiabilidade ao servidor de rede.
 
@@ -73,7 +73,7 @@ Os canais configurados seguem o padrão brasileiro definido pela ANATEL (faixa I
 
 ---
 
-## :computer: Etapa 2 – Instalação do Servidor ChirpStack (Ubuntu)
+## Etapa 2 – Instalação do Servidor ChirpStack (Ubuntu)
 
 Essa etapa estabelece o núcleo lógico da rede LoRaWAN. O servidor ChirpStack processa pacotes, gerencia sessões de dispositivos e permite a configuração de integrações. Esta instalação será feita de forma nativa, o que oferece mais controle e visibilidade do sistema do que ambientes conteinerizados.
 
@@ -121,7 +121,7 @@ Usuário: admin | Senha: admin
 
 ---
 
-## :loudspeaker: Etapa 3 – Integração via MQTT
+## Etapa 3 – Integração via MQTT
 
 Com o servidor operacional, é necessário configurar a integração com uma aplicação cliente que irá consumir os dados enviados pelos sensores. A integração MQTT é uma das mais utilizadas, pois é leve, eficiente e compatível com a maioria dos sistemas de IoT (como Node-RED, Grafana, Python, InfluxDB etc).
 
@@ -148,7 +148,7 @@ mosquitto_sub -t 'application/1/device/+/event/up' -v
 
 ---
 
-## :airplane: Etapa 4 – Dispositivo ABP (Activation By Personalization)
+## Etapa 4 – Dispositivo ABP (Activation By Personalization)
 
 Dispositivos ABP são ideais para ambientes controlados ou testes locais. Eles iniciam imediatamente com chaves estáticas pré-configuradas no código e no ChirpStack, eliminando a necessidade de join. No entanto, por não haver troca dinâmica de chaves, o nível de segurança é menor.
 
@@ -190,7 +190,7 @@ void loop() {
 
 ---
 
-## :rocket: Etapa 5 – Dispositivo OTAA (Over-The-Air Activation)
+## Etapa 5 – Dispositivo OTAA (Over-The-Air Activation)
 
 OTAA é o método recomendado para ambientes em produção. Nele, o dispositivo realiza um processo de 'join' na rede e, se autorizado, recebe chaves de sessão válidas. Isso permite mais segurança e controle, com suporte à renovação dinâmica de chaves.
 
@@ -226,7 +226,7 @@ void loop() {
 * ❌ Processo de inicialização levemente mais demorado e dependente de conectividade para funcionar corretamente.
 * ❌ Pode consumir mais energia se múltiplas tentativas de join forem necessárias.
 
-## :mortar_board: Conclusão
+## Conclusão
 
 Este guia reúne os principais passos para implantar uma rede LoRaWAN funcional com ChirpStack, utilizando integração via MQTT e dispositivos Heltec. Essa abordagem oferece baixo custo, escalabilidade e alta flexibilidade para projetos de IoT em diversas áreas.
 
@@ -238,7 +238,7 @@ Para ambientes mais robustos, considere os seguintes pontos:
 
 ---
 
-## :books: Referências
+## Referências
 
 * [ChirpStack Documentation](https://www.chirpstack.io/)
 * [Heltec ESP32 Docs](https://docs.heltec.org/)
