@@ -8,7 +8,7 @@ Aluno: Luís Felipe Lewandoski Borsoi
 
 ## Introdução
 
-Este documento apresenta um roteiro prático e detalhado para a implantação de uma rede IoT utilizando o padrão LoRaWAN, com o servidor de rede ChirpStack. O cenário considerado envolve:
+Esse documento apresenta um roteiro prático para a implantação de uma rede IoT utilizando o padrão LoRaWAN, com o servidor de rede ChirpStack. O cenário considerado envolve:
 
 * Instalação nativa do ChirpStack em um servidor Ubuntu 22.04
 * Uso de um gateway com Raspberry Pi e concentrador SX1302
@@ -46,28 +46,23 @@ O gateway é o elo entre os dispositivos IoT e o backend da rede. Ele escuta os 
 
 > Certifique-se de que o serviço `mosquitto` esteja ativo. O broker MQTT escutará por padrão na porta 1883.
 
-> Recomendação: utilizar Ubuntu Server 22.04 com acesso root e conexão com a internet.
+> Assume-se a utilização do Ubuntu Server 22.04 com acesso root e conexão com a internet.
 
 Antes de iniciar, certifique-se de utilizar um concentrador SX1301/SX1302/SX1303 devidamente acoplado ao Raspberry Pi, como o RAK2245, RAK2287 ou RAK5146.
 
 1. Baixe a imagem do ChirpStack Gateway OS no site oficial.
 2. Grave a imagem em um cartão SD utilizando o Raspberry Pi Imager.
-3. Configure o IP do servidor no arquivo `chirpstack-gateway-os.toml`:
-
+3.  Configure o IP do servidor no arquivo `chirpstack-gateway-os.toml`:
 ```toml
 [gateway]
 servers=[{uri="udp://192.168.1.100:1700"}]
 ```
-
 4. Defina os canais LoRa utilizados no Brasil:
-
 ```toml
 [concentratord]
 multi_sf_channels=[902300000,902500000,902700000,902900000,903100000,903300000,903500000,903700000]
 ```
-
 5. Inicie o gateway e monitore os logs:
-
 ```bash
 sudo journalctl -u chirpstack-concentratord -f
 ```
@@ -87,43 +82,32 @@ O servidor ChirpStack é responsável por gerenciar os dispositivos LoRaWAN, pro
 ### Passos:
 
 1. Atualize o sistema e adicione o repositório do ChirpStack:
-
 ```bash
 sudo apt update
 sudo apt install -y curl gnupg lsb-release
 curl -fsSL https://artifacts.chirpstack.io/install.sh | sudo bash
 ```
-
 2. Instale o ChirpStack:
-
 ```bash
 sudo apt install chirpstack
 ```
-
 3. Instale e configure o PostgreSQL:
-
 ```bash
 sudo apt install postgresql
 sudo -u postgres psql -c "CREATE ROLE chirpstack WITH LOGIN PASSWORD 'senha';"
 sudo -u postgres psql -c "CREATE DATABASE chirpstack WITH OWNER chirpstack;"
 ```
-
 4. Instale Redis e Mosquitto (broker MQTT):
-
 ```bash
 sudo apt install redis mosquitto mosquitto-clients
 ```
-
 5. Inicie e verifique o serviço:
-
 ```bash
 sudo systemctl enable chirpstack
 sudo systemctl start chirpstack
 sudo journalctl -u chirpstack -f
 ```
-
 6. Acesse a interface web:
-
 ```
 http://<ip-do-servidor>:8080
 Usuário: admin | Senha: admin
@@ -197,23 +181,12 @@ void loop() {
 
 ### Prós e Contras
 
-**ABP (Activation By Personalization):**
-
 * ✅ Simplicidade: o dispositivo pode começar a operar imediatamente, sem depender de processos adicionais de autenticação ou autorização.
 * ✅ Ideal para ambientes de teste, onde a segurança não é uma prioridade e o controle é local.
 * ✅ Permite operação offline total, já que não requer troca com o servidor para iniciar.
 * ❌ Menor segurança: as chaves são fixas e reutilizadas, o que as torna vulneráveis caso sejam interceptadas.
 * ❌ Difícil manutenção em larga escala: qualquer mudança de chave exige reprogramação manual do dispositivo.
 * ❌ Não suporta rotação de chaves ou controle dinâmico por parte do servidor.
-
-**OTAA (Over-The-Air Activation):**
-
-* ✅ Alta segurança: as chaves de sessão (NwkSKey, AppSKey) são geradas dinamicamente durante o join, dificultando interceptações.
-* ✅ Suporte à renovação automática de chaves, aumentando a resiliência e o controle da rede.
-* ✅ Flexibilidade: ideal para ambientes distribuídos e produção em larga escala, com dispositivos que podem se mover entre redes.
-* ❌ Requer que o dispositivo consiga realizar o join com sucesso, o que pode ser afetado por interferência ou distância do gateway.
-* ❌ Processo de inicialização levemente mais demorado e dependente de conectividade para funcionar corretamente.
-* ❌ Pode consumir mais energia se múltiplas tentativas de join forem necessárias. se múltiplas tentativas de join forem necessárias.
 
 ---
 
@@ -246,8 +219,6 @@ void loop() {
 
 ### Prós e Contras
 
-**OTAA (Over-The-Air Activation):**
-
 * ✅ Alta segurança: as chaves de sessão (NwkSKey, AppSKey) são geradas dinamicamente durante o join, dificultando interceptações.
 * ✅ Suporte à renovação automática de chaves, aumentando a resiliência e o controle da rede.
 * ✅ Flexibilidade: ideal para ambientes distribuídos e produção em larga escala, com dispositivos que podem se mover entre redes.
@@ -259,7 +230,7 @@ void loop() {
 
 Este guia reúne os principais passos para implantar uma rede LoRaWAN funcional com ChirpStack, utilizando integração via MQTT e dispositivos Heltec. Essa abordagem oferece baixo custo, escalabilidade e alta flexibilidade para projetos de IoT em diversas áreas.
 
-Para ambientes mais robustos, considere:
+Para ambientes mais robustos, considere os seguintes pontos:
 
 * Utilizar Docker ou Kubernetes para escalar os serviços
 * Configurar autenticação TLS para o broker MQTT
